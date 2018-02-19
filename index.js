@@ -1,10 +1,30 @@
-const Alexa = require('alexa-sdk');
+module.change_code = 1;
+'use strict';
 
-exports.handler = function(event, context, callback) {
-    const alexa = Alexa.handler(event, context, callback);
-    alexa.appId = APP_ID // APP_ID is your skill id which can be found in the Amazon developer console where you create the skill.
-    alexa.execute();
+var alexa = require('alexa-app');
+var app = new alexa.app( 'test-skill' );
+
+
+app.launch( function( request, response ) {
+	response.say( 'Welcome to your test skill' ).reprompt( 'Way to go. You got it to run. Bad ass.' ).shouldEndSession( false );
+} );
+
+
+app.error = function( exception, request, response ) {
+	console.log(exception)
+	console.log(request);
+	console.log(response);	
+	response.say( 'Sorry an error occured ' + error.message);
 };
+
+app.intent('sayNumber',
+  function(request,response) {
+    var number = request.slot('number');
+    response.say("You asked for the number "+number);
+  }
+);
+
+module.exports = app;
 
 /*const express = require('express')
 const path = require('path')
